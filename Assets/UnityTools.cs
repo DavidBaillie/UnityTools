@@ -253,6 +253,32 @@ namespace UnityTools
 
             return temp;
         }
+        /// <summary>
+        /// Takes a provided array of a generic type and increases it length by the provided value while keeping the original content
+        /// </summary>
+        /// <typeparam name="T">Object type of array</typeparam>
+        /// <param name="size">Amount to increase size by, non-positive values will return an unchanged array</param>
+        /// <param name="array">Array to increase size of</param>
+        /// <returns>Contents of provided array with additional elements/indexes at the end</returns>
+        public static T[] increaseArraySize<T>(int size, T[] array)
+        {
+            //Do nothing if we have an invalid size increase
+            if (size <= 0) return array;
+
+            //Edge case for null or empty array
+            if (array == null || array.Length < 1) return new T[size];
+
+            //Build a new larger array
+            T[] temp = new T[array.Length + size];
+
+            //Copy contents over to new array
+            for (int i = 0; i < array.Length; i++)
+            {
+                temp[i] = array[i];
+            }
+
+            return temp;
+        }
 
         /// <summary>
         /// Takes a provided array of a generic type and decreases the size by one, removing the last index of the original array
@@ -341,6 +367,43 @@ namespace UnityTools
 
             return coordinates;
         }
+        /// <summary>
+        /// Returns Adjacent 2D coordinates to a provided coordinate (Vector2Int)
+        /// </summary>
+        /// <param name="x">X Coordinate</param>
+        /// <param name="y">Y Coordinate</param>
+        /// <returns>Array of Vector2Int - Adjacent Coordinates to the provided source</returns>
+        public static Vector2Int[] getAdjacentCoordinates(int x, int y) { return getAdjacentCoordinates(new Vector2Int(x, y)); }
+
+        /// <summary>
+        /// Returns the coordinates surrounding the provided Coordinate (Vector2Int)
+        /// </summary>
+        /// <param name="source">Source Coordinate to return coordinates around</param>
+        /// <returns>Array of Vector2Int - Surrounding coordinates to the provided source</returns>
+        public static Vector2Int[] getSurroundingCoordinates(Vector2Int source)
+        {
+            //Initialize array
+            Vector2Int[] coordinates = new Vector2Int[8];
+
+            //Save coordinates
+            coordinates[0] = new Vector2Int(source.x + 1, source.y);
+            coordinates[1] = new Vector2Int(source.x - 1, source.y);
+            coordinates[2] = new Vector2Int(source.x, source.y + 1);
+            coordinates[3] = new Vector2Int(source.x, source.y - 1);
+            coordinates[4] = new Vector2Int(source.x + 1, source.y - 1);
+            coordinates[5] = new Vector2Int(source.x + 1, source.y + 1);
+            coordinates[6] = new Vector2Int(source.x - 1, source.y - 1);
+            coordinates[7] = new Vector2Int(source.x - 1, source.y + 1);
+
+            return coordinates;
+        }
+        /// <summary>
+        /// Returns the coordinates surrounding the provided Coordinate (Vector2Int)
+        /// </summary>
+        /// <param name="x">X Coordinate</param>
+        /// <param name="y">Y Coordinate</param>
+        /// <returns>Array of Vector2Int - Surrounding coordinates to the provided source</returns>
+        public static Vector2Int[] getSurroundingCoordinates(int x, int y) { return getSurroundingCoordinates(new Vector2Int(x, y)); }
     }
 
     #endregion
