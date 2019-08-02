@@ -166,18 +166,20 @@ namespace UnityTools
         }
     }
 
+#if UNITY_EDITOR
+
     /// <summary>
     /// Tools based around the manipulation of Arrays and Lists
     /// </summary>
     public static class CustomInspectorTools
     {
-        /*
+        
         /// <summary>
         /// Takes an array (SerializedProperty) with a header and content name for displaying an array to the associated inspector
         /// </summary>
         /// <param name="array">SerializedProperty array to draw and modify content of</param>
         /// <param name="headerName">Header content to title array content with</param>
-        /// <param name="elementName">Content to display alongside array elements as titles for content</param>
+        /// <param name="elementName">Content to display alongside array elements as titles for content</param>        
         public static void drawSerializedArrayToInspector(SerializedProperty array, string headerName, string elementName)
         {
             //Display buttons for changing array size
@@ -194,9 +196,53 @@ namespace UnityTools
                 {
                     EditorGUILayout.PropertyField(array.GetArrayElementAtIndex(i), new GUIContent(elementName + (i + 1)));
                 }
+        }        
+
+        /// <summary>
+        /// Draws a header containing the provided text to the inspector
+        /// </summary>
+        /// <param name="content">Text to display in header</param>
+        public static void drawHeader (string content)
+        {
+            GUILayout.Label(content, EditorStyles.boldLabel);
         }
-        */
+
+        /// <summary>
+        /// Draws the provided text to the inspector
+        /// </summary>
+        /// <param name="content">Content to display</param>
+        public static void drawContent (string content)
+        {
+            GUILayout.Label(content);
+        }
+
+        /// <summary>
+        /// Adds a space of 5 on the inspector
+        /// </summary>
+        public static void space() { GUILayout.Space(5); }
+        /// <summary>
+        /// Adds of space of size X on the inspector
+        /// </summary>
+        /// <param name="size">Size of space</param>
+        public static void space (int size) { GUILayout.Space(size); }
+
+        /// <summary>
+        /// Draws an Editor IntField to the inspector
+        /// </summary>
+        /// <param name="description">Description to br displayed alongside the field</param>
+        /// <param name="value">Integer value to display in the field</param>
+        /// <returns>Integer - Field value assigned on this call, used to update variables used when exposing them to the inspector</returns>
+        public static int drawIntField (string description, int value) { return EditorGUILayout.IntField(description, value); }
+        /// <summary>
+        /// Draws an Editor FloatField to the inspector
+        /// </summary>
+        /// <param name="description">Description to br displayed alongside the field</param>
+        /// <param name="value">Float value to display in the field</param>
+        /// <returns>Float - Field value assigned on this call, used to update variables used when exposing them to the inspector</returns>
+        public static float drawFloatField (string description, float value) { return EditorGUILayout.FloatField(description, value); }
     }
+
+#endif
 
     /// <summary>
     /// Tools based around the support of Unity Custom Inspector Usage
@@ -408,7 +454,7 @@ namespace UnityTools
 
     #endregion
 
-    #region Enumerable Decorator Classes
+    #region Enumerable Unity Classes
 
     /// <summary>
     /// Decorator class to provide iterable functionality to the Unity Vector3Int class
@@ -480,6 +526,15 @@ namespace UnityTools
         /// </summary>
         /// <returns></returns>
         public Vector3 asVector3() { return new Vector3(data.x, data.y, data.z); }
+
+        /// <summary>
+        /// Returns the string representation of this class
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return "(" + x + "/" + y + "/" + z + ")";
+        }
     }
 
     /// <summary>
@@ -553,6 +608,15 @@ namespace UnityTools
         /// </summary>
         /// <returns></returns>
         public Vector3 asVector3() { return new Vector3(data.x, data.y, data.z); }
+
+        /// <summary>
+        /// Returns the string representation of this class
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return "(" + x + "/" + y + "/" + z + ")";
+        }
     }
 
     #endregion
